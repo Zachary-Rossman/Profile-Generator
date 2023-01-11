@@ -19,10 +19,10 @@ const generateHTML = ({ managerName, managerID, managerEmail, managerNumber}) =>
 </head>
 <body>
   <header>
-  <div>${managerName}</div>
-  <div>${managerID}</div>
-  <div>${managerEmail}</div>
-  <div>${managerNumber}</div>
+  <h5>Manager Name:</h5> <p>${managerName}</p>
+  <h5>Manager ID:</h5> <p>${managerID}</p>
+  <h5>Manager Email Address:</h5> <p>${managerEmail}</p>
+  <h5>Manager Office Number:</h5> <p>${managerNumber}</p>
   </header>
 </body>
 </html>`;
@@ -30,25 +30,31 @@ const generateHTML = ({ managerName, managerID, managerEmail, managerNumber}) =>
 inquirer
   .prompt([
     {
-      type: 'input',
-      name: 'managerName',
+      type: "input",
+      name: "managerName",
       message: "What is your team manager's name?",
     },
     {
-      type: 'input',
-      name: 'managerID',
+      type: "input",
+      name: "managerID",
       message: "What is your manager's employee ID?",
     },
     {
-      type: 'input',
-      name: 'managerEmail',
+      type: "input",
+      name: "managerEmail",
       message: "What is your manager's email address?",
     },
     {
-      type: 'input',
-      name: 'managerNumber',
+      type: "input",
+      name: "managerNumber",
       message: "What is your manager's office phone number?",
     },
+    {
+        type: "list",
+        name: "mainMenu",
+        message: "Add an engineer, intern, or finish",
+        choices: ["engineer", "intern", "finish"], 
+      },
   ])
   .then((answers) => {
     const htmlPageContent = generateHTML(answers);
