@@ -54,6 +54,6 @@ inquirer
     const htmlPageContent = generateHTML(answers);
 
     fs.writeFile('team.html', htmlPageContent, (err) =>
-      err ? console.log(err) : console.log('Successfully created index.html!')
+      err ? console.log(err) : console.log('Successfully created team.html!')
     );
   });
