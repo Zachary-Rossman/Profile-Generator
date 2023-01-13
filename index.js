@@ -7,8 +7,152 @@
 // Generate HTML files
 const inquirer = require('inquirer');
 const fs = require('fs');
+const { createInterface } = require('readline');
+const team = [];
 
-const generateHTML = ({ managerName, managerID, managerEmail, managerNumber}) =>
+// Create manager
+function createManager(){
+  inquirer
+  .prompt([
+    {
+      type: "input",
+      name: "managerName",
+      message: "What is your team manager's name?",
+    },
+
+    {
+      type: "input",
+      name: "managerID",
+      message: "What is your manager's employee ID?",
+    },
+
+    {
+      type: "input",
+      name: "managerEmail",
+      message: "What is your manager's email address?",
+    },
+
+    {
+      type: "input",
+      name: "managerNumber",
+      message: "What is your manager's office phone number?",
+    },
+  ])
+  .then((answers) => {
+    console.log(answers);
+    // Create a new manager object from the manager class
+
+    // Push manager onto team array
+    createTeam();
+  });
+};
+
+// Create Engineer
+function createEngineer(){
+  inquirer
+  .prompt([
+    {
+      type: "input",
+      name: "engineerName",
+      message: "What is your engineer's name?",
+    },
+
+    {
+      type: "input",
+      name: "engineeerID",
+      message: "What is your engineer's employee ID?",
+    },
+
+    {
+      type: "input",
+      name: "engineerEmail",
+      message: "What is your engineer's email address?",
+    },
+
+    {
+      type: "input",
+      name: "engineerGithub",
+      message: "What is your engineer's Github?",
+    },
+  ])
+  .then((answers) => {
+    console.log(answers);
+    // Create a new engineer object from the manager class
+
+    // Push egineer onto team array
+    createTeam();
+
+
+  });
+};
+
+// Create Engineer
+function createIntern(){
+  inquirer
+  .prompt([
+    {
+      type: "input",
+      name: "internName",
+      message: "What is your intern's name?",
+    },
+
+    {
+      type: "input",
+      name: "internID",
+      message: "What is your intern's employee ID?",
+    },
+
+    {
+      type: "input",
+      name: "internEmail",
+      message: "What is your intern's email address?",
+    },
+
+    {
+      type: "input",
+      name: "internSchool",
+      message: "What is your intern's school?",
+    },
+  ])
+  .then((answers) => {
+    console.log(answers);
+    // Create a new engineer object from the manager class
+
+    // Push egineer onto team array
+    createTeam();
+
+
+  });
+};
+
+function createTeam(){
+  inquirer
+  .prompt([
+    {
+        type: "list",
+        name: "mainMenu",
+        message: "Add an engineer, intern, or finish",
+        choices: ["engineer", "intern", "finish"], 
+      },
+  ])
+  .then((answers) => {
+    console.log(answers);
+    if (answers.mainMenu === "engineer") {
+      createEngineer();
+    }else if (answers.mainMenu === "inter"){
+      createIntern();;
+    }else{
+      const parseHTML = generateHTML(team);
+
+      // Write to file
+      fs.writeFile('team.html', parseHTML, (err) =>
+        err ? console.log(err) : console.log('Successfully created team.html!')
+      );
+    }
+  });
+};
+
+const generateHTML = (team) =>
   `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,40 +170,8 @@ const generateHTML = ({ managerName, managerID, managerEmail, managerNumber}) =>
   </header>
 </body>
 </html>`;
+// Ask questions to populate HTML
 
-inquirer
-  .prompt([
-    {
-      type: "input",
-      name: "managerName",
-      message: "What is your team manager's name?",
-    },
-    {
-      type: "input",
-      name: "managerID",
-      message: "What is your manager's employee ID?",
-    },
-    {
-      type: "input",
-      name: "managerEmail",
-      message: "What is your manager's email address?",
-    },
-    {
-      type: "input",
-      name: "managerNumber",
-      message: "What is your manager's office phone number?",
-    },
-    {
-        type: "list",
-        name: "mainMenu",
-        message: "Add an engineer, intern, or finish",
-        choices: ["engineer", "intern", "finish"], 
-      },
-  ])
-  .then((answers) => {
-    const htmlPageContent = generateHTML(answers);
-
-    fs.writeFile('team.html', htmlPageContent, (err) =>
-      err ? console.log(err) : console.log('Successfully created team.html!')
-    );
-  });
+createManager();
+createEngineer();
+createIntern();
